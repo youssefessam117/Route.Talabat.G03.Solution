@@ -42,14 +42,15 @@ namespace Route.Talabat.APIs
 			try
 			{
 				await _dbContext.Database.MigrateAsync();
+				await StoreContextSeed.SeedAsync(_dbContext);
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex);
 
 				var logger = loggerFactory.CreateLogger<Program>();
-				logger.LogError(ex, "an error has been occured during apply migration");
-			}
+				logger.LogError(ex.StackTrace, "an error has been occured during apply migration");
+			}       
 
 			#region configure() method to configure kestrel middlewares like dot net 5 
 			// Configure the HTTP request pipeline.
