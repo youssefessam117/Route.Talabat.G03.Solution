@@ -20,7 +20,10 @@ namespace Talabat.Infrastructure
 		}
 		public async Task<IEnumerable<T>> GetAllAsync()
 		{
-			return await dbContext.Set<T>().ToListAsync();
+			if(typeof(T) == typeof(Product)) 
+				return (IEnumerable<T>) await dbContext.Set<Product>().AsNoTracking().Include(p => p.Brand).Include(p => p.Category).ToListAsync();
+			
+			return await dbContext.Set<T>().AsNoTracking().ToListAsync();
 		}
 
 		public async Task<T?> GetAsync(int id)

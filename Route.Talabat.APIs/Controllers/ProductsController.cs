@@ -5,8 +5,6 @@ using Talabat.Core.Repositories.Contract;
 
 namespace Route.Talabat.APIs.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
 	public class ProductsController : BaseApiController
 	{
 		private readonly IGenaricRepository<Product> productsRepo;
@@ -15,5 +13,18 @@ namespace Route.Talabat.APIs.Controllers
         {
 			this.productsRepo = productsRepo;
 		}
+
+		// / api/products
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+		{
+			var products = await productsRepo.GetAllAsync();
+
+			///JsonResult result = new JsonResult(products);
+			///OkResult result = new OkResult(products);
+
+			return Ok(products);
+		}
+
     }
 }
