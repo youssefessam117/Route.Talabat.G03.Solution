@@ -1,5 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
+using Talabat.Core.Entites;
+using Talabat.Core.Repositories.Contract;
+using Talabat.Infrastructure;
 using Talabat.Infrastructure.Data;
 
 namespace Route.Talabat.APIs
@@ -27,6 +30,12 @@ namespace Route.Talabat.APIs
 			{
 				option.UseSqlServer(webApplicationBuilder.Configuration.GetConnectionString("DefaultConnection"));
 			});
+
+			//webApplicationBuilder.Services.AddScoped<IGenaricRepository<Product>, GenericRepository<Product>>();
+			//old way make u repeate the code 
+
+			// genaric way if need of type <> gave them of type<>
+			webApplicationBuilder.Services.AddScoped(typeof(IGenaricRepository<>),typeof(GenericRepository<>));
 			#endregion
 
 			var app = webApplicationBuilder.Build();
