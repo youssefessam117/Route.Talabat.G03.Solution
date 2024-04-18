@@ -77,6 +77,8 @@ namespace Route.Talabat.APIs
 
 
 			app.MapControllers();
+
+			app.UseStaticFiles();
 			#endregion
 
 		

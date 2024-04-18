@@ -7,7 +7,7 @@ namespace Route.Talabat.APIs.Helpers
 	public class MappingProfiles : Profile
 	{
 
-		public MappingProfiles(IConfiguration configuration)
+		public MappingProfiles()
 		{
 			CreateMap<Product, ProductToReturnDto>()
 				.ForMember(d => d.Brand, o => o.MapFrom(s => s.Brand.Name))
