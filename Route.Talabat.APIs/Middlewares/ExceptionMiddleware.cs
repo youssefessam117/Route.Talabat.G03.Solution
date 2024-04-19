@@ -43,7 +43,7 @@ namespace Route.Talabat.APIs.Middlewares
 
 				var options = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
-				var json = JsonSerializer.Serialize(response);
+				var json = JsonSerializer.Serialize(response);  
 
 				await httpContext.Response.WriteAsync(json);
 			}
