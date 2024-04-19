@@ -1,5 +1,11 @@
 
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Route.Talabat.APIs.Errors;
+using Route.Talabat.APIs.Extensions;
+using Route.Talabat.APIs.Helpers;
+using Route.Talabat.APIs.Middlewares;
 using Talabat.Core.Entites;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Infrastructure;
@@ -22,20 +28,18 @@ namespace Route.Talabat.APIs
 			// Add services to the container.
 
 			webApplicationBuilder.Services.AddControllers();
-			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-			webApplicationBuilder.Services.AddEndpointsApiExplorer();
-			webApplicationBuilder.Services.AddSwaggerGen(); 
+
+			webApplicationBuilder.Services.AddSwaggerServices();
+
+
 
 			webApplicationBuilder.Services.AddDbContext<StoreContext>(option =>
 			{
 				option.UseSqlServer(webApplicationBuilder.Configuration.GetConnectionString("DefaultConnection"));
 			});
 
-			//webApplicationBuilder.Services.AddScoped<IGenaricRepository<Product>, GenericRepository<Product>>();
-			//old way make u repeate the code 
+			webApplicationBuilder.Services.AddApplicationServices();
 
-			// genaric way if need of type <> gave them of type<>
-			webApplicationBuilder.Services.AddScoped(typeof(IGenaricRepository<>),typeof(GenericRepository<>));
 			#endregion
 
 			var app = webApplicationBuilder.Build();
@@ -62,17 +66,22 @@ namespace Route.Talabat.APIs
 			}       
 
 			#region configure() method to configure kestrel middlewares like dot net 5 
+	        
+			app.UseMiddleware<ExceptionMiddleware>();
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
-				app.UseSwagger();
-				app.UseSwaggerUI();
+				app.UseSwaggerMiddlewares();
 			}
+
+			app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 			app.UseHttpsRedirection();
 
+			app.UseStaticFiles();
 
 			app.MapControllers();
+
 			#endregion
 
 		
