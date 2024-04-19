@@ -44,7 +44,7 @@ namespace Route.Talabat.APIs.Controllers
 
 			if (products is null)
 			{
-				return NotFound( new {message = "Not found" , statsCode = 404}); // 404 
+				return NotFound(new ApiResponse(404)); // 404 
 			}
 
 			return Ok(mapper.Map<Product,ProductToReturnDto>(products)); // 200 

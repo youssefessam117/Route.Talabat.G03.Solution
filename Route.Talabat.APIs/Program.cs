@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Route.Talabat.APIs.Errors;
+using Route.Talabat.APIs.Extensions;
 using Route.Talabat.APIs.Helpers;
 using Route.Talabat.APIs.Middlewares;
 using Talabat.Core.Entites;
@@ -27,40 +28,18 @@ namespace Route.Talabat.APIs
 			// Add services to the container.
 
 			webApplicationBuilder.Services.AddControllers();
-			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-			webApplicationBuilder.Services.AddEndpointsApiExplorer();
-			webApplicationBuilder.Services.AddSwaggerGen(); 
+
+			webApplicationBuilder.Services.AddSwaggerServices();
+
+
 
 			webApplicationBuilder.Services.AddDbContext<StoreContext>(option =>
 			{
 				option.UseSqlServer(webApplicationBuilder.Configuration.GetConnectionString("DefaultConnection"));
 			});
 
-			//webApplicationBuilder.Services.AddScoped<IGenaricRepository<Product>, GenericRepository<Product>>();
-			//old way make u repeate the code 
+			webApplicationBuilder.Services.AddApplicationServices();
 
-			// genaric way if need of type <> gave them of type<>
-			webApplicationBuilder.Services.AddScoped(typeof(IGenaricRepository<>),typeof(GenericRepository<>));
-
-			//webApplicationBuilder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
-			webApplicationBuilder.Services.AddAutoMapper(typeof(MappingProfiles));
-
-			webApplicationBuilder.Services.Configure<ApiBehaviorOptions>(options =>
-			{
-				options.InvalidModelStateResponseFactory = (actionContext) =>
-				{
-					var errors = actionContext.ModelState.Where(p => p.Value.Errors.Count() > 0)
-					                                     .SelectMany(p => p.Value.Errors)
-														 .Select(e => e.ErrorMessage)
-					                                     .ToArray();
-					var response = new ApiValidationErrorResponse()
-					{
-						Errors = errors
-					};
-
-					return new BadRequestObjectResult(response);
-				};
-			});
 			#endregion
 
 			var app = webApplicationBuilder.Build();
@@ -92,8 +71,7 @@ namespace Route.Talabat.APIs
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
-				app.UseSwagger();
-				app.UseSwaggerUI();
+				app.UseSwaggerMiddlewares();
 			}
 
 			app.UseStatusCodePagesWithReExecute("/errors/{0}");
