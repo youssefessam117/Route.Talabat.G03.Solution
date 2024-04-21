@@ -10,9 +10,13 @@ namespace Talabat.Core.Specifications.Product_specs
 	public class ProductWithBrandAndCategorySpecifications :BaseSpecifications<Product>
 	{
 		// this constructor Will be used for creating an Object, that will used to get all products 
-		public ProductWithBrandAndCategorySpecifications()
+		public ProductWithBrandAndCategorySpecifications(string sort)
 		{
 			AddIncludes();
+			if (!string.IsNullOrEmpty(sort))
+			{
+
+			}
 		}
 
 		// this constructor Will be used for creating an Object, that will used to get spicfic product with id  

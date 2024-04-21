@@ -32,7 +32,7 @@ namespace Route.Talabat.APIs.Controllers
 
 		// / api/products
 		[HttpGet]
-		public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
+		public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(string sort)
 		{
 			var spec = new ProductWithBrandAndCategorySpecifications();
 			var products = await productsRepo.GetAllWithSpecAsync(spec);
