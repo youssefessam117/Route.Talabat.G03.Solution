@@ -10,17 +10,17 @@ namespace Talabat.Core.Specifications.Product_specs
 	public class ProductWithBrandAndCategorySpecifications :BaseSpecifications<Product>
 	{
 		// this constructor Will be used for creating an Object, that will used to get all products 
-		public ProductWithBrandAndCategorySpecifications(string sort, int? brandId, int? categoryId)
+		public ProductWithBrandAndCategorySpecifications(ProductSpecParams specParams)
 			:base(p => 
-			
-			     (!brandId.HasValue || p.BrandId == brandId.Value) &&
-			     (!categoryId.HasValue || p.CategoryId == categoryId.Value)
+
+			     (!specParams.BrandId.HasValue || p.BrandId == specParams.BrandId.Value) &&
+			     (!specParams.CategoryId.HasValue || p.CategoryId == specParams.CategoryId.Value)
 			)
 		{
 			AddIncludes();
-			if (!string.IsNullOrEmpty(sort))
+			if (!string.IsNullOrEmpty(specParams.Sort))
 			{
-				switch (sort)
+				switch (specParams.Sort)
 				{
 					case "priceAsc":
 						//OrderBy = p => p.Price;
@@ -35,6 +35,8 @@ namespace Talabat.Core.Specifications.Product_specs
 				}
 			}
 			else AddOrderBy(p => p.Name);
+
+			ApplyPagination((specParams.PageIndex - 1) * specParams.PageSize, specParams.PageSize);
 		}
 
 		// this constructor Will be used for creating an Object, that will used to get spicfic product with id  
