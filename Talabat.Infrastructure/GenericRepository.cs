@@ -37,6 +37,11 @@ namespace Talabat.Infrastructure
 			return await dbContext.Set<T>().FindAsync(id);
 		}
 
+		public Task<int> GetCountAsync(ISpecifications<T> spec)
+		{
+			throw new NotImplementedException();
+		}
+
 		public async Task<T?> GetWithSpecAsync(ISpecifications<T> spec)
 		{
 			return await ApplySpecifications(spec).FirstOrDefaultAsync();
