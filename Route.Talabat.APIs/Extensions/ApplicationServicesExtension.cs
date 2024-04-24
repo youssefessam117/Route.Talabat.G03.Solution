@@ -11,6 +11,9 @@ namespace Route.Talabat.APIs.Extensions
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
+            
+			//services.AddScoped<IBasketRepository, BasketRepository>(); old way 
+			services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));// new way with type of 
 			//webApplicationBuilder.Services.AddScoped<IGenaricRepository<Product>, GenericRepository<Product>>();
 			//old way make u repeate the code 
 
