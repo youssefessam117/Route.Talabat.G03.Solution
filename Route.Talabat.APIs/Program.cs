@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Route.Talabat.APIs.Errors;
@@ -8,6 +9,7 @@ using Route.Talabat.APIs.Helpers;
 using Route.Talabat.APIs.Middlewares;
 using StackExchange.Redis;
 using Talabat.Core.Entites;
+using Talabat.Core.Entites.Identity;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Infrastructure;
 using Talabat.Infrastructure.Data;
@@ -53,6 +55,10 @@ namespace Route.Talabat.APIs
 				option.UseSqlServer(webApplicationBuilder.Configuration.GetConnectionString("IdentityConnection"));
 			});
 
+			webApplicationBuilder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+			{
+
+			}).AddEntityFrameworkStores<ApplicationIdentityDbContext>();
 			#endregion
 
 			var app = webApplicationBuilder.Build();
@@ -73,7 +79,11 @@ namespace Route.Talabat.APIs
 			{
 				await _dbContext.Database.MigrateAsync();// update database 
 				await StoreContextSeed.SeedAsync(_dbContext);
+
+
 				await _IdentityDbContext.Database.MigrateAsync(); // update database 
+				var _userManger = services.GetRequiredService<UserManager<ApplicationUser>>();
+				await ApplicationIdentityContextSeed.SeedUserAsync(_userManger);
 			}
 			catch (Exception ex)
 			{
