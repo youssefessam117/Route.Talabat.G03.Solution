@@ -36,7 +36,10 @@ namespace Route.Talabat.APIs
 			#region Configure Service method from dot net 5 
 			// Add services to the container.
 
-			webApplicationBuilder.Services.AddControllers();
+			webApplicationBuilder.Services.AddControllers().AddNewtonsoftJson(options =>
+			{
+				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+			});
 
 			webApplicationBuilder.Services.AddSwaggerServices();
 
