@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Route.Talabat.APIs.Dtos;
@@ -31,7 +33,8 @@ namespace Route.Talabat.APIs.Controllers
 			this.categoriesRepo = categoriesRepo;
 		}
 
-		// / api/products
+		// GET /api/products
+		[Authorize]
 		[HttpGet]
 		public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams specParams)
 		{
@@ -50,9 +53,9 @@ namespace Route.Talabat.APIs.Controllers
 			return Ok(new Pagination<ProductToReturnDto>(specParams.PageIndex,specParams.PageSize,count, data));
 		}
 
+		[HttpGet("{id}")]
 		[ProducesResponseType(typeof(ProductToReturnDto), StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-		[HttpGet("{id}")]
 		public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
 		{
 			var spec = new ProductWithBrandAndCategorySpecifications(id);
