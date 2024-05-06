@@ -19,6 +19,13 @@ namespace Talabat.Infrastructure
 		{
 			this.dbContext = dbContext;
 		}
+
+		public void Add(T entity)
+		=> dbContext.Set<T>().Add(entity);
+
+		public void Delete(T entity)
+		=> dbContext.Set<T>().Remove(entity);
+
 		public async Task<IReadOnlyList<T>> GetAllAsync()
 		{
 			//if(typeof(T) == typeof(Product)) 
@@ -46,6 +53,9 @@ namespace Talabat.Infrastructure
 		{
 			return await ApplySpecifications(spec).FirstOrDefaultAsync();
 		}
+
+		public void Update(T entity)
+		=> dbContext.Set<T>().Update(entity);
 
 		private IQueryable<T> ApplySpecifications(ISpecifications<T> spec)
 		{
