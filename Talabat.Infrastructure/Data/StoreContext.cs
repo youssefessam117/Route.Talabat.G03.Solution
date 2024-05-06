@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Entites;
+using Talabat.Core.Entites.Order_Aggregate;
 using Talabat.Infrastructure.Data.Config;
 
 namespace Talabat.Infrastructure.Data
@@ -29,5 +30,8 @@ namespace Talabat.Infrastructure.Data
 		public DbSet<Product> Products { get; set; }
 		public DbSet<ProductBrand> ProductBrands { get; set; }
 		public DbSet<ProductCategory> ProductCategories { get; set; }
+		public DbSet<Order> Orders { get; set; }
+		public DbSet<OrderItem> OrderItems { get; set; }
+		public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 	}
 }
