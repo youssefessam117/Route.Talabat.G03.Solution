@@ -9,9 +9,11 @@ namespace Talabat.Core.Entites.Order_Aggregate
 {
 	public enum OrderStatus
 	{
-		//[EnumMember]
+		[EnumMember(Value = "Pending")]
 		Pending,
+		[EnumMember(Value = "PaymentReceived")]
 		PaymentReceived,
+		[EnumMember(Value = "PaymentFailed")]
 		PaymentFailed
 	}
 }
