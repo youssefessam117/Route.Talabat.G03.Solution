@@ -6,6 +6,7 @@ using Route.Talabat.APIs.Errors;
 using Route.Talabat.APIs.Helpers;
 using System.Text;
 using Talabat.Application.AuthService;
+using Talabat.Core;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Services.Contract;
 using Talabat.Infrastructure;
@@ -16,14 +17,18 @@ namespace Route.Talabat.APIs.Extensions
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
+			
+			services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
             
 			//services.AddScoped<IBasketRepository, BasketRepository>(); old way 
 			services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));// new way with type of 
-			//webApplicationBuilder.Services.AddScoped<IGenaricRepository<Product>, GenericRepository<Product>>();
-			//old way make u repeate the code 
 
-			// genaric way if need of type <> gave them of type<>
-			services.AddScoped(typeof(IGenaricRepository<>), typeof(GenericRepository<>));
+
+			///webApplicationBuilder.Services.AddScoped<IGenaricRepository<Product>, GenericRepository<Product>>();
+			///old way make u repeate the code 
+			/// genaric way if need of type <> gave them of type<>
+			///services.AddScoped(typeof(IGenaricRepository<>), typeof(GenericRepository<>));
+
 
 			//webApplicationBuilder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
 			services.AddAutoMapper(typeof(MappingProfiles));
