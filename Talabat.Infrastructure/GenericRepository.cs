@@ -38,7 +38,7 @@ namespace Talabat.Infrastructure
 			return await ApplySpecifications(spec).ToListAsync();
 		}
 
-		public async Task<T?> GetAsync(int id)
+		public async Task<T?> GetByIdAsync(int id)
 		{
 			//return await dbContext.Set<Product>().Where(p => p.Id == id).AsNoTracking().Include(p => p.Brand).Include(p => p.Category).FirstOrDefaultAsync() as T;
 			return await dbContext.Set<T>().FindAsync(id);
