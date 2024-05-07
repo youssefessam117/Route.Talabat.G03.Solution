@@ -17,10 +17,12 @@ namespace Talabat.Application.OrderService
 		private readonly IGenaricRepository<DeliveryMethod> deliveryMethodRepo;
 		private readonly IGenaricRepository<Order> orderRepo;
 
-		public OrderService(IBasketRepository basketRepo,
+		public OrderService(
+			IBasketRepository basketRepo,
 			IGenaricRepository<Product> productRepo,
 			IGenaricRepository<DeliveryMethod> deliveryMethodRepo,
-			IGenaricRepository<Order> orderRepo)
+			IGenaricRepository<Order> orderRepo
+			)
 		{
 			this.basketRepo = basketRepo;
 			this.productRepo = productRepo;
