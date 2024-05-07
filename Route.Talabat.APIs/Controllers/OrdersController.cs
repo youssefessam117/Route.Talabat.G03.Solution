@@ -60,5 +60,14 @@ namespace Route.Talabat.APIs.Controllers
 			return Ok(mapper.Map<OrderToReturnDto>(order));
 		}
 
+		[Authorize]
+		[HttpGet("deliveryMethods")] // GEt : /api/Orders/deliveryMethods
+		public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
+		{
+			var deliveryMethods = await orderService.GetDeliveryMethodsAsync();
+			return Ok(deliveryMethods);
+		}
+
+
 	}
 }
