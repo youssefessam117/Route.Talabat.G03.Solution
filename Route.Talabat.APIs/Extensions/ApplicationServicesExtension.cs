@@ -6,6 +6,7 @@ using Route.Talabat.APIs.Errors;
 using Route.Talabat.APIs.Helpers;
 using System.Text;
 using Talabat.Application.AuthService;
+using Talabat.Application.OrderService;
 using Talabat.Core;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Services.Contract;
@@ -17,7 +18,9 @@ namespace Route.Talabat.APIs.Extensions
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
-			
+
+			services.AddScoped(typeof(IOrderService), typeof(OrderService));
+
 			services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
             
 			//services.AddScoped<IBasketRepository, BasketRepository>(); old way 
