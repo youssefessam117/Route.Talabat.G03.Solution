@@ -26,9 +26,9 @@ namespace Route.Talabat.APIs.Controllers
 			this.orderService = orderService;
 			this.mapper = mapper;
 		}
-		[HttpPost] // POST /api/Orders
 		[ProducesResponseType(typeof(Order), StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+		[HttpPost] // POST /api/Orders
 		public async Task<ActionResult<Order>> CreateOrder(OrderDto orderDto)
 		{
 			var address = mapper.Map<AddressDto, Address>(orderDto.ShippingAddress);
@@ -38,5 +38,13 @@ namespace Route.Talabat.APIs.Controllers
 
 			return Ok(order);
 		}
+
+
+		[HttpGet] // GET : /api/Orders
+		public async Task<ActionResult<IReadOnlyList<Order>>> GetOrderForUser(string email)
+		{
+			var orders = await orderService.GetOrdersForUserAsync(email);
+			return Ok(orders);
+		} 
 	}
 }

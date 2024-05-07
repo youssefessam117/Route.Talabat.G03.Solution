@@ -13,11 +13,11 @@ namespace Talabat.Core.Entites.Order_Aggregate
         {
             
         }
-        public Order(string buyerEmail, Address shippingAddress, int? deliveryMethodId, ICollection<OrderItem> items, decimal subtotal)
+        public Order(string buyerEmail, Address shippingAddress, DeliveryMethod? deliveryMethod, ICollection<OrderItem> items, decimal subtotal)
 		{
 			BuyerEmail = buyerEmail;
 			ShippingAddress = shippingAddress;
-			DeliveryMethodId = deliveryMethodId;
+			DeliveryMethod = deliveryMethod;
 			Items = items;
 			Subtotal = subtotal;
 		}
@@ -29,7 +29,7 @@ namespace Talabat.Core.Entites.Order_Aggregate
 		public OrderStatus Status { get; set; }
 		public Address ShippingAddress { get; set; }
 
-		public int? DeliveryMethodId { get; set; } // Foreign Key 
+		//public int? DeliveryMethodId { get; set; } // Foreign Key 
 
 		public DeliveryMethod? DeliveryMethod { get; set; } // Navigational Property [One]
 						

@@ -8,6 +8,7 @@ using Talabat.Core.Entites;
 using Talabat.Core.Entites.Order_Aggregate;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Services.Contract;
+using Talabat.Core.Specifications.Order_specs;
 
 namespace Talabat.Application.OrderService
 {
@@ -63,7 +64,7 @@ namespace Talabat.Application.OrderService
 
 			// 4. Get Delivery Method From DeliveryMethods Repo
 
-			//var deliveryMethod = await unitOfWork.Repository<DeliveryMethod>().GetAsync(deliveryMethodId);
+			var deliveryMethod = await unitOfWork.Repository<DeliveryMethod>().GetAsync(deliveryMethodId);
 
 
 			// 5. Create Order 
@@ -71,7 +72,7 @@ namespace Talabat.Application.OrderService
 			var order = new Order(
 				buyerEmail: buyerEmail,
 				shippingAddress: shippingAddress,
-				deliveryMethodId: deliveryMethodId,
+				deliveryMethod: deliveryMethod,
 				items: orderItems,
 				subtotal: subtotal
 				);
@@ -98,9 +99,15 @@ namespace Talabat.Application.OrderService
 			throw new NotImplementedException();
 		}
 
-		public Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail)
+		public async Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail)
 		{
-			throw new NotImplementedException();
+			var orderRepo = unitOfWork.Repository<Order>();
+
+			var spec = new OrderSpecifications(buyerEmail);
+
+			var orders = await orderRepo.GetAllWithSpecAsync(spec);
+
+			return orders;
 		}
 	}
 }
