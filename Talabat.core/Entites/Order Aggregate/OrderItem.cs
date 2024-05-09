@@ -8,7 +8,7 @@ namespace Talabat.Core.Entites.Order_Aggregate
 {
 	public class OrderItem : BaseEntity
 	{
-        private OrderItem()
+        public OrderItem()
         {
             
         }

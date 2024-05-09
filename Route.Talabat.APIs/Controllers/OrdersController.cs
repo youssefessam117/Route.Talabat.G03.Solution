@@ -36,12 +36,12 @@ namespace Route.Talabat.APIs.Controllers
 
 			if (order == null) return BadRequest(new ApiResponse(400));
 
-			return Ok(mapper.Map<Order,OrderToReturnDto>(order));
+			return Ok(mapper.Map<Order, OrderToReturnDto>(order));
 		}
 
 
 		[HttpGet] // GET : /api/Orders
-		public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrderForUser(string email)
+		public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser(string email)
 		{
 			var orders = await orderService.GetOrdersForUserAsync(email);
 			return Ok(mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDto>>(orders));
