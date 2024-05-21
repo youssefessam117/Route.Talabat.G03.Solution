@@ -26,5 +26,7 @@ namespace Talabat.Core.Specifications.Order_specs
 			Includes.Add(o => o.Items);
 
 		}
+
+		
 	}
 }
