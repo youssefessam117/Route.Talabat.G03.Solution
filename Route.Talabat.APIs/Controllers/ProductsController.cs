@@ -38,7 +38,7 @@ namespace Route.Talabat.APIs.Controllers
 		}
 
 		// GET /api/products
-		[Authorize]
+		//[Authorize]
 		[HttpGet]
 		public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams specParams)
 		{

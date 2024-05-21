@@ -72,6 +72,14 @@ namespace Route.Talabat.APIs
 
 			webApplicationBuilder.Services.AddAuthServices(webApplicationBuilder.Configuration);
 
+			webApplicationBuilder.Services.AddCors(option =>
+			{
+				option.AddPolicy("MyPolicy", policyOptions =>
+				{
+					policyOptions.AllowAnyHeader().AllowAnyMethod().WithOrigins(webApplicationBuilder.Configuration["FrontBaseUrl"]);
+				});
+			});
+
 
 			#endregion
 
@@ -121,6 +129,8 @@ namespace Route.Talabat.APIs
 			app.UseHttpsRedirection();
 
 			app.UseStaticFiles();
+
+			app.UseCors("MyPolicy");
 
 			app.MapControllers();
 
