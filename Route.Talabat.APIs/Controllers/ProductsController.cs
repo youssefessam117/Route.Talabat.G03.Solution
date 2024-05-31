@@ -36,7 +36,7 @@ namespace Route.Talabat.APIs.Controllers
 			///this.brandsRepo = brandsRepo;
 			///this.categoriesRepo = categoriesRepo;
 		}
-
+		[CachedAttribute(600)]
 		// GET /api/products
 		//[Authorize]
 		[HttpGet]
